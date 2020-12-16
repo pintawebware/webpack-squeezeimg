@@ -1,0 +1,36 @@
+{
+  "name": "webpack-squeezeimg",
+  "version": "1.0.0",
+  "description": "Plugin squeezeimg webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/kirians/squeezeimg-webpack.git"
+  },
+  "keywords": [
+    "plugin",
+    "webpack",
+    "images",
+    "compress",
+    "convert"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/kirians/squeezeimg-webpack/issues"
+  },
+  "homepage": "https://gitlab.com/kirians/squeezeimg-webpack#readme",
+  "devDependencies": {
+    "webpack": "^5.10.2",
+    "webpack-cli": "^4.2.0"
+  },
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "request": "^2.88.2"
+  }
+}
