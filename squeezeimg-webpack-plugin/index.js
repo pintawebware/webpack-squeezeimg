@@ -1,6 +1,30 @@
 const path = require('path');
 const request = require('request');
 const { scrapingPathFiles, readFile, writeFile, existOrAddDir } = require('./helpers')
+const { createLogger, format, transports } = require('winston');
+const { combine, timestamp, printf } = format;
+ 
+const myFormat = printf(({ level, message, timestamp }) => {
+  return `${timestamp} ${level}: ${message}`;
+});
+
+const logger = createLogger({
+  level: 'error',
+  format: combine(
+      timestamp(),
+      myFormat
+  ),
+  transports: [
+      new transports.Console(),
+      new transports.File({
+          filename: path.join(__dirname, 'error.log'),
+          level: 'error',
+      })
+  ],
+  handleExceptions : true,
+  colorize: true,
+  exitOnError: false
+});
 
 
 const PLUGIN_NAME = 'webpack-squeezeimg'
@@ -17,6 +41,9 @@ module.exports = class SqueezeimgWebpackPlugin {
       compiler.hooks.done.tap("SqueezeimgWebpackPlugin", async (stats) => {
         let options = this.options;
         try {
+            if (!options.token) {
+              throw new Error(`${PLUGIN_NAME}  error : Not token options`);
+            }
             let count = 0;
             let dest = path.resolve(compiler.options.context, options.dest || '')
             let files = scrapingPathFiles(path.resolve(compiler.options.context, options.src || ''));
@@ -28,7 +55,7 @@ module.exports = class SqueezeimgWebpackPlugin {
                   console.log(`${PLUGIN_NAME} processes : ${file}`);
                   let req = request.post({ url: URL, encoding: 'binary' }, (err, resp, body) => {
                     if (err) {
-                      reject(err);
+                      logger.error(`${PLUGIN_NAME} error : ${err.message}`)
                     } else if (resp.statusCode === 200) {
                       let filename = file.split('/').pop();
                       if (options.rename) {
@@ -43,11 +70,9 @@ module.exports = class SqueezeimgWebpackPlugin {
                       try {
                         res = JSON.parse(str);
                       } catch (err) { }
-                      reject(new Error(res.error || res.message || str));
+                      logger.error(`${PLUGIN_NAME} error : ${res.error.message || res.message || str}`)
                     }
-                    count--;
-                    if (count === 0) resolve();
-      
+                    resolve();
                   });
                   let data = readFile(file);
                   let formData = req.form();
@@ -61,7 +86,7 @@ module.exports = class SqueezeimgWebpackPlugin {
               }
             } 
           } catch (err) {
-              console.log(`${PLUGIN_NAME} error : ${err}`);
+            logger.error(`${PLUGIN_NAME} error : ${err.message}`);
           }
       })
     }
