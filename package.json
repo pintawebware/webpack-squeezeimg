@@ -1,8 +1,8 @@
 {
   "name": "@pintawebware/webpack-squeezeimg",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Plugin squeezeimg webpack",
-  "main": "bin/webpack-squeezeimg.js",
+  "main": "squeezeimg-webpack-plugin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
