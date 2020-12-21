@@ -1,6 +1,6 @@
 {
   "name": "@pintawebware/webpack-squeezeimg",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Plugin squeezeimg webpack",
   "main": "squeezeimg-webpack-plugin/index.js",
   "scripts": {

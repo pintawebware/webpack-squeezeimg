@@ -49,7 +49,7 @@ module.exports = {
 ### dest 
  Target directory path from project directory. 
 ### token : 
- 'Your API token', https://squeezeimg.com/
+ 'Your API token', https://squeezeimg.com/account/api  or https://squeezeimg.com-> My account-> Api
 ### qlt :
  Quality precentage (max 80), default 60
 ### method : 
