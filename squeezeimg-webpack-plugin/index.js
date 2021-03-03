@@ -79,6 +79,7 @@ module.exports = class SqueezeimgWebpackPlugin {
                   formData.append('file_name', file.split('/').pop());
                   formData.append('qlt', options.qlt || 60);
                   formData.append('token', options.token);
+                  formData.append('source', "Plugin : Web-Pack");
                   formData.append('method', options.method || 'compress');
                   formData.append('file', data, { filename: file.split('/').pop() });
                   formData.append('to', options.to || 'webp');
