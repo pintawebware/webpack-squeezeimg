@@ -69,8 +69,9 @@ module.exports = class SqueezeimgWebpackPlugin {
                       let res = {};
                       try {
                         res = JSON.parse(str);
+                        if(res.eventObject === 'tariff') { reject(res.error);}
                       } catch (err) { }
-                      logger.error(`${PLUGIN_NAME} error : ${res.error.message || res.message || str}`)
+                      logger.error(`${PLUGIN_NAME} error : ${res.error || res.message || str}`)
                     }
                     resolve();
                   });
@@ -87,7 +88,7 @@ module.exports = class SqueezeimgWebpackPlugin {
               }
             } 
           } catch (err) {
-            logger.error(`${PLUGIN_NAME} error : ${err.message}`);
+            logger.error(`${PLUGIN_NAME} error : ${err}`);
           }
       })
     }
